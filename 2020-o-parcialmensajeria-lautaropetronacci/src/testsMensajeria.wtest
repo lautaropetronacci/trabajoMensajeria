@@ -1,0 +1,25 @@
+import usuariosYChats.*
+import mensajes.*
+
+const chatVelezano = new Chats(mensajes = [], participantes = [alf, rasta])
+const chatPdep = new ChatsPremiums(mensajes = [mensajeAPdep], participantes = [alf, rasta], restriccion = difusion, creador = rasta)
+ const alf = new Usuario(nombre = "alfredo", espacioLibre = 1000, chats = [chatVelezano], mensajesSinLeer = [])
+ const rasta = new Usuario(nombre = "nahuel palumbo", espacioLibre = 50, chats =[chatVelezano, chatPdep], mensajesSinLeer = [])
+ const audioAVelez = new Mensajes(emisor = "alfredo", contenido = new Audio(duracion = 15))
+const mensajeAPdep = new Mensajes(emisor = "nahuel palumbo", contenido = new Audio(duracion = 100))
+
+	
+test "el peso del chatPdep tiene que ser"{
+	assert.equals(120,chatPdep.pesoChat())
+}
+
+test "cuando se envia un mensaje a chatVelezano, aparece en sus mensajes"{
+	alf.enviarMensaje(audioAVelez,chatVelezano)
+	assert.that(chatVelezano.mensajes().contains(audioAVelez))
+}
+
+test "cuando alf quiere enviar un mensaje a chatPdep, da error"{
+	const audioAlfAPdep = new Mensajes(emisor = "alfredo", contenido = new Audio(duracion = 10))
+	assert.throwsExceptionWithMessage("no se puede enviar el mensaje" ,{alf.enviarMensaje(audioAlfAPdep, chatPdep)})
+	
+}
